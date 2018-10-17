@@ -1,27 +1,38 @@
 <template>
-<div>
-<add-blog></add-blog>
+<div id="show-blogs">
+  <h1>All Blog Articles</h1>
+  <div class="single-blog" v-for="blog in blogs">
+      <h2>{{blog.title}}</h2>
+      <p>{{blog.body}}</p>
+  </div>
 </div>
     
 </template>
 
 <script>
 
-import addBlog from './component/addBlog';
-import showBlog from './component/showBlog';
 
 export default {
-  components:{
-    'add-blog': addBlog,
-    'show-blog': showBlog
-  },
+  
 
   data(){
     return{
-    
+      blogs: []
     }
   },
-     
+   
+
+  methods:{
+
+  },
+
+  created(){
+      this.$http.get('https://jsonplaceholder.typeicode/post').then(function(data){
+          console.log(data);
+         this.blogs = data.body.slice(0,10);
+      })
+  }
+
 }
 
 
